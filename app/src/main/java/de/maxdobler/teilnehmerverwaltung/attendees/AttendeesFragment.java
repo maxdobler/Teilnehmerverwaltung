@@ -1,8 +1,6 @@
 package de.maxdobler.teilnehmerverwaltung.attendees;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -16,16 +14,14 @@ import com.google.firebase.database.DatabaseReference;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import de.maxdobler.teilnehmerverwaltung.Attendee;
 import de.maxdobler.teilnehmerverwaltung.AttendeeViewHolder;
 import de.maxdobler.teilnehmerverwaltung.R;
-import de.maxdobler.teilnehmerverwaltung.addAttendee.AddAttendeeActivity;
 import de.maxdobler.teilnehmerverwaltung.util.FirebaseRef;
 
 public class AttendeesFragment extends Fragment {
     public static final int THREE_COLUMNS = 3;
-    private OnFragmentInteractionListener mListener;
+    private OnAttendeesFragmentListener mListener;
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -71,19 +67,14 @@ public class AttendeesFragment extends Fragment {
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), THREE_COLUMNS));
     }
 
-    @OnClick(R.id.addFab)
-    void addAttendee() {
-        startActivity(new Intent(getContext(), AddAttendeeActivity.class));
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof OnAttendeesFragmentListener) {
+            mListener = (OnAttendeesFragmentListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement OnAttendeesFragmentListener");
         }
     }
 
@@ -93,7 +84,7 @@ public class AttendeesFragment extends Fragment {
         mListener = null;
     }
 
-    public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Uri uri);
+    public interface OnAttendeesFragmentListener {
+        void onAttend(String attendeeKey);
     }
 }
