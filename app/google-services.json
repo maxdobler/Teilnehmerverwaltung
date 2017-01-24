@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "598099819280",
+    "firebase_url": "https://teilnehmerverwaltung-25d1e.firebaseio.com",
+    "project_id": "teilnehmerverwaltung-25d1e",
+    "storage_bucket": "teilnehmerverwaltung-25d1e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:598099819280:android:c54ad48fdc68ad37",
+        "android_client_info": {
+          "package_name": "de.maxdobler.teilnehmerverwaltung"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "598099819280-vs5i18hpmuoiu60ovgslrv3nhdj0onq9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "de.maxdobler.teilnehmerverwaltung",
+            "certificate_hash": "955F5CA8DC6E4902E039B41C376909B11FE46730"
+          }
+        },
+        {
+          "client_id": "598099819280-3o5go9tmosfdaqcgjbhc0rh86t2q3f1i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXLP2nEi-quKSTHhh4Fs5QwVfvyXJwQs0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "598099819280-3o5go9tmosfdaqcgjbhc0rh86t2q3f1i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
