@@ -9,4 +9,8 @@ public class FirebaseRef {
     public static DatabaseReference attendees() {
         return FirebaseDatabase.getInstance().getReference("attendees");
     }
+
+    public static DatabaseReference events() {
+        return FirebaseDatabase.getInstance().getReference("events");
+    }
 }
