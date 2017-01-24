@@ -3,4 +3,5 @@
     <string name="add_attendee_name_hint">Name</string>
     <string name="add_attendee_create_button">Anlegen</string>
     <string name="add_attendee_name_error_message">Bitte gib einen Namen ein.</string>
+
 </resources>
