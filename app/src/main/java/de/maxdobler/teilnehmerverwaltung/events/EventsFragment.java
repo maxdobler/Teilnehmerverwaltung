@@ -49,8 +49,15 @@ public class EventsFragment extends Fragment {
 
         FirebaseRecyclerAdapter<Event, EventViewHolder> recyclerAdapter = new FirebaseRecyclerAdapter<Event, EventViewHolder>(Event.class, R.layout.item_event, EventViewHolder.class, FirebaseRef.events()) {
             @Override
-            protected void populateViewHolder(EventViewHolder viewHolder, Event event, int position) {
+            protected void populateViewHolder(EventViewHolder viewHolder, final Event event, final int position) {
                 viewHolder.bind(event);
+                viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String eventKey = getRef(position).getKey();
+                        mListener.onEventSelected(eventKey);
+                    }
+                });
             }
         };
         recyclerView.setAdapter(recyclerAdapter);

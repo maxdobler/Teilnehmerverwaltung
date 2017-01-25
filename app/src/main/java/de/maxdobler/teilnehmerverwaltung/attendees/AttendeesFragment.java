@@ -21,7 +21,11 @@ import de.maxdobler.teilnehmerverwaltung.util.FirebaseRef;
 
 public class AttendeesFragment extends Fragment {
     public static final int THREE_COLUMNS = 3;
+    public static final String TAG = AttendeesFragment.class.getSimpleName();
+    private static final String EVENT_KEY = "eventKey";
+
     private OnAttendeesFragmentListener mListener;
+    private String mEventKey;
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -29,9 +33,10 @@ public class AttendeesFragment extends Fragment {
     public AttendeesFragment() {
     }
 
-    public static AttendeesFragment newInstance() {
+    public static AttendeesFragment newInstance(String eventKey) {
         AttendeesFragment fragment = new AttendeesFragment();
         Bundle args = new Bundle();
+        args.putString(EVENT_KEY, eventKey);
         fragment.setArguments(args);
         return fragment;
     }
@@ -39,6 +44,7 @@ public class AttendeesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mEventKey = getArguments().getString(EVENT_KEY);
     }
 
     @Override

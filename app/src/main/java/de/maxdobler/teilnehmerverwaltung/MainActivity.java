@@ -2,6 +2,9 @@ package de.maxdobler.teilnehmerverwaltung;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,7 +24,6 @@ public class MainActivity extends AppCompatActivity implements AttendeesFragment
 
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.mainContent, EventsFragment.newInstance())
-                .add(R.id.mainContent, AttendeesFragment.newInstance())
                 .commit();
 
     }
@@ -50,6 +52,17 @@ public class MainActivity extends AppCompatActivity implements AttendeesFragment
 
     @Override
     public void onEventSelected(String eventKey) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        Fragment oldAttendees = fragmentManager.findFragmentByTag(AttendeesFragment.TAG);
+        if (oldAttendees != null) {
+            fragmentTransaction = fragmentTransaction
+                    .remove(oldAttendees);
+
+        }
+        fragmentTransaction
+                .add(R.id.mainContent, AttendeesFragment.newInstance(eventKey), AttendeesFragment.TAG)
+                .commit();
 
     }
 
