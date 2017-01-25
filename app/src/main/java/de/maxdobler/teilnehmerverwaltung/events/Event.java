@@ -1,8 +1,11 @@
 package de.maxdobler.teilnehmerverwaltung.events;
 
+import com.google.firebase.database.Exclude;
+
 public class Event {
     public static final String ATTENDEES = "attendees";
     private String name;
+    private long attendeesCount;
 
     public Event() {
     }
@@ -17,5 +20,15 @@ public class Event {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Exclude
+    public long getAttendeesCount() {
+        return attendeesCount;
+    }
+
+    @Exclude
+    public void setAttendeesCount(long attendeesCount) {
+        this.attendeesCount = attendeesCount;
     }
 }

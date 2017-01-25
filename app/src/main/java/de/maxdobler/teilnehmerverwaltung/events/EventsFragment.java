@@ -7,11 +7,15 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,6 +25,7 @@ import de.maxdobler.teilnehmerverwaltung.events.add.AddEventDialog;
 import de.maxdobler.teilnehmerverwaltung.util.FirebaseRef;
 
 public class EventsFragment extends Fragment {
+    private static final String TAG = EventsFragment.class.getSimpleName();
     private OnEventFragmentListener mListener;
 
     @BindView(R.id.recyclerView)
@@ -49,15 +54,28 @@ public class EventsFragment extends Fragment {
 
         FirebaseRecyclerAdapter<Event, EventViewHolder> recyclerAdapter = new FirebaseRecyclerAdapter<Event, EventViewHolder>(Event.class, R.layout.item_event, EventViewHolder.class, FirebaseRef.events()) {
             @Override
-            protected void populateViewHolder(EventViewHolder viewHolder, final Event event, final int position) {
-                viewHolder.bind(event);
-                viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            protected void populateViewHolder(final EventViewHolder viewHolder, final Event event, final int position) {
+                getRef(position).child(Event.ATTENDEES).addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onClick(View view) {
-                        String eventKey = getRef(position).getKey();
-                        mListener.onEventSelected(eventKey);
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        long attendeesCount = dataSnapshot.getChildrenCount();
+                        event.setAttendeesCount(attendeesCount);
+                        viewHolder.bind(event);
+                        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                String eventKey = getRef(position).getKey();
+                                mListener.onEventSelected(eventKey);
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.e(TAG, "Error loading event attendees count for event " + getRef(position).getKey(), databaseError.toException());
                     }
                 });
+
             }
         };
         recyclerView.setAdapter(recyclerAdapter);

@@ -13,5 +13,6 @@
 
     <string name="save">Anlegen</string>
     <string name="cancel">Abbrechen</string>
+    <string name="event_attendees_count">(%d)</string>
 
 </resources>
