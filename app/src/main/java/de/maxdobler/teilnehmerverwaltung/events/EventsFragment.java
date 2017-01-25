@@ -15,7 +15,9 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.maxdobler.teilnehmerverwaltung.R;
+import de.maxdobler.teilnehmerverwaltung.events.add.AddEventDialog;
 import de.maxdobler.teilnehmerverwaltung.util.FirebaseRef;
 
 public class EventsFragment extends Fragment {
@@ -74,6 +76,11 @@ public class EventsFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @OnClick(R.id.addEventButton)
+    void openAddEventDialog() {
+        new AddEventDialog().show(getFragmentManager(), "AddEventDialog");
     }
 
     public interface OnEventFragmentListener {
