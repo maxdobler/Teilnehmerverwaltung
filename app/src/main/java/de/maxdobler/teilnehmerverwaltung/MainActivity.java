@@ -22,9 +22,14 @@ public class MainActivity extends AppCompatActivity implements AttendeesFragment
         setContentView(R.layout.main_activity);
         ButterKnife.bind(this);
 
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.mainContent, EventsFragment.newInstance())
-                .commit();
+        Fragment eventFragment = getSupportFragmentManager().findFragmentByTag(EventsFragment.TAG);
+        if (eventFragment == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.mainContent, EventsFragment.newInstance(), EventsFragment.TAG)
+                    .commit();
+
+        }
+
 
     }
 
