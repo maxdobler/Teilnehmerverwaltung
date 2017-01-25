@@ -1,4 +1,4 @@
-package de.maxdobler.teilnehmerverwaltung;
+package de.maxdobler.teilnehmerverwaltung.attendees;
 
 public class Customer {
 

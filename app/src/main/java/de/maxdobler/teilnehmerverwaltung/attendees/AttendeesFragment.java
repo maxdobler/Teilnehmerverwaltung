@@ -1,6 +1,7 @@
 package de.maxdobler.teilnehmerverwaltung.attendees;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -19,9 +20,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import de.maxdobler.teilnehmerverwaltung.Customer;
-import de.maxdobler.teilnehmerverwaltung.CustomerViewHolder;
 import de.maxdobler.teilnehmerverwaltung.R;
+import de.maxdobler.teilnehmerverwaltung.customerDetail.CustomerDetailActivity;
 import de.maxdobler.teilnehmerverwaltung.util.FirebaseRef;
 
 public class AttendeesFragment extends Fragment {
@@ -93,6 +93,15 @@ public class AttendeesFragment extends Fragment {
                                         showEmptyQuotaDialog();
                                     }
                                 }
+                            }
+                        });
+                        viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                            @Override
+                            public boolean onLongClick(View view) {
+                                Intent intent = new Intent(getContext(), CustomerDetailActivity.class);
+                                intent.putExtra(CustomerDetailActivity.CUSTOMER_KEY, customerKey);
+                                startActivity(intent);
+                                return true;
                             }
                         });
                     }

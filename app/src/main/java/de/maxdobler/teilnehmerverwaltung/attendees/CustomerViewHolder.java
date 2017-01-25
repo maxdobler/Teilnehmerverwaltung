@@ -1,4 +1,4 @@
-package de.maxdobler.teilnehmerverwaltung;
+package de.maxdobler.teilnehmerverwaltung.attendees;
 
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.maxdobler.teilnehmerverwaltung.R;
 
 public class CustomerViewHolder extends RecyclerView.ViewHolder {
 

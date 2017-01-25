@@ -21,7 +21,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.maxdobler.teilnehmerverwaltung.R;
-import de.maxdobler.teilnehmerverwaltung.events.add.AddEventDialog;
 import de.maxdobler.teilnehmerverwaltung.util.FirebaseRef;
 
 public class EventsFragment extends Fragment {

@@ -1,4 +1,4 @@
-package de.maxdobler.teilnehmerverwaltung.events.add;
+package de.maxdobler.teilnehmerverwaltung.events;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

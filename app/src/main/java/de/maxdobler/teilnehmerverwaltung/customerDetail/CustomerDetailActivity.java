@@ -12,13 +12,13 @@ import com.google.firebase.database.ValueEventListener;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import de.maxdobler.teilnehmerverwaltung.Customer;
+import de.maxdobler.teilnehmerverwaltung.attendees.Customer;
 import de.maxdobler.teilnehmerverwaltung.R;
 import de.maxdobler.teilnehmerverwaltung.util.FirebaseRef;
 
 public class CustomerDetailActivity extends AppCompatActivity {
     private static final String TAG = CustomerDetailActivity.class.getSimpleName();
-    private static final String CUSTOMER_KEY = "customerKey";
+    public static final String CUSTOMER_KEY = "customerKey";
 
     @BindView(R.id.nameEditText)
     EditText nameEditText;
