@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/add_attendee_activity"
+    android:id="@+id/customer_detail_activity"
     style="@style/activityRoot"
     android:orientation="vertical"
-    tools:context="de.maxdobler.teilnehmerverwaltung.addAttendee.AddAttendeeActivity">
+    tools:context="de.maxdobler.teilnehmerverwaltung.customerDetail.CustomerDetailActivity">
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
@@ -14,7 +14,20 @@
             android:id="@+id/nameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/add_attendee_name_hint" />
+            android:hint="@string/customer_detail_name_hint" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/quotaEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/customer_detail_quota_hint"
+            android:inputType="number" />
 
     </android.support.design.widget.TextInputLayout>
 

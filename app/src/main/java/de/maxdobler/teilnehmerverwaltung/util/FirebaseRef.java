@@ -12,6 +12,10 @@ public class FirebaseRef {
         return FirebaseDatabase.getInstance().getReference("customers");
     }
 
+    public static DatabaseReference customer(String customerKey) {
+        return customers().child(customerKey);
+    }
+
     public static DatabaseReference events() {
         return FirebaseDatabase.getInstance().getReference("events");
     }

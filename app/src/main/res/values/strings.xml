@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Teilnehmerverwaltung</string>
-    <string name="add_attendee_name_hint">Name</string>
+    <string name="customer_detail_name_hint">Name</string>
     <string name="add_attendee_create_button">@string/save</string>
     <string name="add_attendee_name_error_message">Bitte gib einen Namen ein.</string>
     <string name="events_here_platzhalter">Events here</string>
@@ -11,9 +11,15 @@
     <string name="add_event_dialog_positiv">@string/save</string>
     <string name="add_event_dialog_negativ">@string/cancel</string>
 
-    <string name="save">Anlegen</string>
+    <string name="save">Speichern</string>
     <string name="cancel">Abbrechen</string>
+    <string name="ok">OK</string>
     <string name="event_attendees_count">(%d)</string>
     <string name="customer_quota_text">Kontingent: %d</string>
+    <string name="attendee_empty_quota_dialog_title">"Kontigent aufgebraucht "</string>
+    <string name="attendee_empty_quota_dialog_message">Das Kontigent muss aufgefüllt werden um an dem Termin teilzunehmen.</string>
+    <string name="attendee_empty_dialog_quota_dialog_negative">@string/ok</string>
+    <string name="customer_detail_quota_hint">Kontigent</string>
+    <string name="customer_detail_quota_error">Kontingent darf nicht negativ sein</string>
 
 </resources>

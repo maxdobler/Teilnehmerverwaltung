@@ -10,7 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import butterknife.ButterKnife;
-import de.maxdobler.teilnehmerverwaltung.addAttendee.AddAttendeeActivity;
+import de.maxdobler.teilnehmerverwaltung.customerDetail.CustomerDetailActivity;
 import de.maxdobler.teilnehmerverwaltung.attendees.AttendeesFragment;
 import de.maxdobler.teilnehmerverwaltung.events.EventsFragment;
 
@@ -67,6 +67,6 @@ public class MainActivity extends AppCompatActivity implements AttendeesFragment
     }
 
     void showAddAttendee() {
-        startActivity(new Intent(this, AddAttendeeActivity.class));
+        startActivity(new Intent(this, CustomerDetailActivity.class));
     }
 }

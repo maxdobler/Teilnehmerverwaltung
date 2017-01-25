@@ -83,20 +83,22 @@ public class AttendeesFragment extends Fragment {
                                 if (isAttendee) {
                                     eventAttendeeRef.removeValue();
                                     customer.addRemainingEvents(1);
+                                    saveCustomer();
                                 } else {
                                     if (customer.hasRemainingEvents()) {
                                         eventAttendeeRef.setValue(true);
                                         customer.removeRemainingEvents(1);
+                                        saveCustomer();
                                     } else {
-                                        new AlertDialog.Builder(getActivity())
-                                                .setTitle("Kontigent aufgebraucht ")
-                                                .setMessage("Das Kontigent muss aufgefüllt werden um an dem Termin teilzunehmen.")
-                                                .setNegativeButton("Ok", null)
-                                                .show();
+                                        showEmptyQuotaDialog();
                                     }
                                 }
                             }
                         });
+                    }
+
+                    private void saveCustomer() {
+                        getRef(position).setValue(customer);
                     }
 
                     @Override
@@ -110,6 +112,14 @@ public class AttendeesFragment extends Fragment {
 
         recyclerView.setAdapter(recyclerAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), THREE_COLUMNS));
+    }
+
+    private void showEmptyQuotaDialog() {
+        new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.attendee_empty_quota_dialog_title)
+                .setMessage(R.string.attendee_empty_quota_dialog_message)
+                .setNegativeButton(R.string.attendee_empty_dialog_quota_dialog_negative, null)
+                .show();
     }
 
     @Override

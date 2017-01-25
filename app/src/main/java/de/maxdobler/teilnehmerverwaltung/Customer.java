@@ -8,8 +8,9 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(String name) {
+    public Customer(String name, int quota) {
         this.name = name;
+        this.quota = quota;
     }
 
     public String getName() {
