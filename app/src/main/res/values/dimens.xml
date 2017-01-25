@@ -3,7 +3,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="padding_normal">16dp</dimen>
     <dimen name="cardCornerRadius">4dp</dimen>
-    <dimen name="cardElevation">8dp</dimen>
+    <dimen name="cardElevation">4dp</dimen>
     <dimen name="padding_small">8dp</dimen>
     <dimen name="toolbarElevation">4dp</dimen>
 </resources>

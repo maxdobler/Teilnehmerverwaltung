@@ -30,6 +30,7 @@ public class EventsFragment extends Fragment {
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+    private String mSelectedEvent;
 
     public EventsFragment() {
     }
@@ -55,17 +56,22 @@ public class EventsFragment extends Fragment {
         FirebaseRecyclerAdapter<Event, EventViewHolder> recyclerAdapter = new FirebaseRecyclerAdapter<Event, EventViewHolder>(Event.class, R.layout.item_event, EventViewHolder.class, FirebaseRef.events()) {
             @Override
             protected void populateViewHolder(final EventViewHolder viewHolder, final Event event, final int position) {
+                final String eventKey = getRef(position).getKey();
                 getRef(position).child(Event.ATTENDEES).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        long attendeesCount = dataSnapshot.getChildrenCount();
+
+                        final long attendeesCount = dataSnapshot.getChildrenCount();
                         event.setAttendeesCount(attendeesCount);
                         viewHolder.bind(event);
+                        boolean isSelected = eventKey.equals(mSelectedEvent);
+                        viewHolder.setSelected(isSelected);
                         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                String eventKey = getRef(position).getKey();
                                 mListener.onEventSelected(eventKey);
+                                mSelectedEvent = eventKey;
+                                notifyDataSetChanged();
                             }
                         });
                     }
