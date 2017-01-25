@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".addAttendee.AddAttendeeActivity" />
+        <activity android:name=".customerSettings.CustomerSettingsActivity"></activity>
     </application>
 
 </manifest>

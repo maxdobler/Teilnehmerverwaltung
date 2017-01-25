@@ -3,6 +3,7 @@ package de.maxdobler.teilnehmerverwaltung.attendees;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -66,7 +67,7 @@ public class AttendeesFragment extends Fragment {
 
     private void setupRecyclerView() {
         DatabaseReference attendeesRef = FirebaseRef.customers();
-        FirebaseRecyclerAdapter<Customer, CustomerViewHolder> recyclerAdapter = new FirebaseRecyclerAdapter<Customer, CustomerViewHolder>(Customer.class, R.layout.item_attendee, CustomerViewHolder.class, attendeesRef) {
+        FirebaseRecyclerAdapter<Customer, CustomerViewHolder> recyclerAdapter = new FirebaseRecyclerAdapter<Customer, CustomerViewHolder>(Customer.class, R.layout.customer_item, CustomerViewHolder.class, attendeesRef) {
             @Override
             protected void populateViewHolder(final CustomerViewHolder viewHolder, final Customer customer, final int position) {
                 final String customerKey = getRef(position).getKey();
@@ -81,8 +82,18 @@ public class AttendeesFragment extends Fragment {
                                 DatabaseReference eventAttendeeRef = FirebaseRef.eventAttendee(mEventKey, customerKey);
                                 if (isAttendee) {
                                     eventAttendeeRef.removeValue();
+                                    customer.addRemainingEvents(1);
                                 } else {
-                                    eventAttendeeRef.setValue(true);
+                                    if (customer.hasRemainingEvents()) {
+                                        eventAttendeeRef.setValue(true);
+                                        customer.removeRemainingEvents(1);
+                                    } else {
+                                        new AlertDialog.Builder(getActivity())
+                                                .setTitle("Kontigent aufgebraucht ")
+                                                .setMessage("Das Kontigent muss aufgefüllt werden um an dem Termin teilzunehmen.")
+                                                .setNegativeButton("Ok", null)
+                                                .show();
+                                    }
                                 }
                             }
                         });
