@@ -25,12 +25,13 @@ import de.maxdobler.teilnehmerverwaltung.events.add.AddEventDialog;
 import de.maxdobler.teilnehmerverwaltung.util.FirebaseRef;
 
 public class EventsFragment extends Fragment {
-    private static final String TAG = EventsFragment.class.getSimpleName();
+    public static final String TAG = EventsFragment.class.getSimpleName();
+    private static final String SELECTED_EVENT = "selectedEvent";
     private OnEventFragmentListener mListener;
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-    private String mSelectedEvent;
+    private String mSelectedEventKey;
 
     public EventsFragment() {
     }
@@ -49,6 +50,20 @@ public class EventsFragment extends Fragment {
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putString(SELECTED_EVENT, mSelectedEventKey);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            mSelectedEventKey = savedInstanceState.getString(SELECTED_EVENT);
+        }
+        super.onViewStateRestored(savedInstanceState);
+    }
+
+    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
@@ -64,13 +79,13 @@ public class EventsFragment extends Fragment {
                         final long attendeesCount = dataSnapshot.getChildrenCount();
                         event.setAttendeesCount(attendeesCount);
                         viewHolder.bind(event);
-                        boolean isSelected = eventKey.equals(mSelectedEvent);
+                        boolean isSelected = eventKey.equals(mSelectedEventKey);
                         viewHolder.setSelected(isSelected);
                         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 mListener.onEventSelected(eventKey);
-                                mSelectedEvent = eventKey;
+                                mSelectedEventKey = eventKey;
                                 notifyDataSetChanged();
                             }
                         });

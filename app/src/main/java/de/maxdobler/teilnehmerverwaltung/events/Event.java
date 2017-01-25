@@ -1,7 +1,9 @@
 package de.maxdobler.teilnehmerverwaltung.events;
 
 import com.google.firebase.database.Exclude;
+import com.google.firebase.database.IgnoreExtraProperties;
 
+@IgnoreExtraProperties
 public class Event {
     public static final String ATTENDEES = "attendees";
     private String name;
