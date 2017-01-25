@@ -3,6 +3,7 @@ package de.maxdobler.teilnehmerverwaltung.customerDetail;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.google.firebase.database.DataSnapshot;
@@ -12,8 +13,8 @@ import com.google.firebase.database.ValueEventListener;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import de.maxdobler.teilnehmerverwaltung.attendees.Customer;
 import de.maxdobler.teilnehmerverwaltung.R;
+import de.maxdobler.teilnehmerverwaltung.attendees.Customer;
 import de.maxdobler.teilnehmerverwaltung.util.FirebaseRef;
 
 public class CustomerDetailActivity extends AppCompatActivity {
@@ -39,21 +40,29 @@ public class CustomerDetailActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
 
         if (extras != null) {
-            mCustomerKey = extras.getString(CUSTOMER_KEY);
-            FirebaseRef.customer(mCustomerKey).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    mCustomer = dataSnapshot.getValue(Customer.class);
-                    nameEditText.setText(mCustomer.getName());
-                    quotaEditText.setText(String.valueOf(mCustomer.getQuota()));
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    Log.e(TAG, "Failed to load customer " + mCustomerKey, databaseError.toException());
-                }
-            });
+            loadCustomer(extras);
         }
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    private void loadCustomer(Bundle extras) {
+        mCustomerKey = extras.getString(CUSTOMER_KEY);
+        FirebaseRef.customer(mCustomerKey).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                mCustomer = dataSnapshot.getValue(Customer.class);
+                nameEditText.setText(mCustomer.getName());
+                quotaEditText.setText(String.valueOf(mCustomer.getQuota()));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG, "Failed to load customer " + mCustomerKey, databaseError.toException());
+            }
+        });
     }
 
     @OnClick(R.id.saveButton)
@@ -83,5 +92,14 @@ public class CustomerDetailActivity extends AppCompatActivity {
         }
 
         finish();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
