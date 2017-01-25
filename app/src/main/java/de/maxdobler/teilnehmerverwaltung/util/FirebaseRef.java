@@ -8,8 +8,8 @@ import de.maxdobler.teilnehmerverwaltung.events.Event;
 
 public class FirebaseRef {
 
-    public static DatabaseReference attendees() {
-        return FirebaseDatabase.getInstance().getReference("attendees");
+    public static DatabaseReference customers() {
+        return FirebaseDatabase.getInstance().getReference("customers");
     }
 
     public static DatabaseReference events() {

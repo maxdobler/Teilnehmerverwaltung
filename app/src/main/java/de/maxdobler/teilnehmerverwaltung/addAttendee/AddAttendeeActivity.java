@@ -7,7 +7,7 @@ import android.widget.EditText;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import de.maxdobler.teilnehmerverwaltung.Attendee;
+import de.maxdobler.teilnehmerverwaltung.Customer;
 import de.maxdobler.teilnehmerverwaltung.R;
 import de.maxdobler.teilnehmerverwaltung.util.FirebaseRef;
 
@@ -31,7 +31,7 @@ public class AddAttendeeActivity extends AppCompatActivity {
             nameEditText.setError(getString(R.string.add_attendee_name_error_message));
             return;
         }
-        FirebaseRef.attendees().push().setValue(new Attendee(name));
+        FirebaseRef.customers().push().setValue(new Customer(name));
         finish();
     }
 }

@@ -51,11 +51,6 @@ public class MainActivity extends AppCompatActivity implements AttendeesFragment
     }
 
     @Override
-    public void onAttend(String attendeeKey) {
-
-    }
-
-    @Override
     public void onEventSelected(String eventKey) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

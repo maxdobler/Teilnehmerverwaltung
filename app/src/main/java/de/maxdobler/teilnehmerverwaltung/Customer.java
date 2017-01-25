@@ -1,13 +1,13 @@
 package de.maxdobler.teilnehmerverwaltung;
 
-public class Attendee {
+public class Customer {
 
     private String name;
 
-    public Attendee() {
+    public Customer() {
     }
 
-    public Attendee(String name) {
+    public Customer(String name) {
         this.name = name;
     }
 

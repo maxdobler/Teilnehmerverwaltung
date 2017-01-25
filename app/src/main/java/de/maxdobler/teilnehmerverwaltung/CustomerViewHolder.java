@@ -9,7 +9,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AttendeeViewHolder extends RecyclerView.ViewHolder {
+public class CustomerViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.name)
     TextView nameTextView;
@@ -17,13 +17,13 @@ public class AttendeeViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.userCard)
     CardView userCard;
 
-    public AttendeeViewHolder(View itemView) {
+    public CustomerViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }
 
-    public void bind(Attendee attendee, boolean isAttendee) {
-        nameTextView.setText(attendee.getName());
+    public void bind(Customer customer, boolean isAttendee) {
+        nameTextView.setText(customer.getName());
         int color = ContextCompat.getColor(itemView.getContext(), android.R.color.background_light);
         if (isAttendee) {
             color = ContextCompat.getColor(itemView.getContext(), R.color.colorPrimaryLight);

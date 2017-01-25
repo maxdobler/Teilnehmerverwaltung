@@ -18,8 +18,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import de.maxdobler.teilnehmerverwaltung.Attendee;
-import de.maxdobler.teilnehmerverwaltung.AttendeeViewHolder;
+import de.maxdobler.teilnehmerverwaltung.Customer;
+import de.maxdobler.teilnehmerverwaltung.CustomerViewHolder;
 import de.maxdobler.teilnehmerverwaltung.R;
 import de.maxdobler.teilnehmerverwaltung.util.FirebaseRef;
 
@@ -65,20 +65,20 @@ public class AttendeesFragment extends Fragment {
     }
 
     private void setupRecyclerView() {
-        DatabaseReference attendeesRef = FirebaseRef.attendees();
-        FirebaseRecyclerAdapter<Attendee, AttendeeViewHolder> recyclerAdapter = new FirebaseRecyclerAdapter<Attendee, AttendeeViewHolder>(Attendee.class, R.layout.item_attendee, AttendeeViewHolder.class, attendeesRef) {
+        DatabaseReference attendeesRef = FirebaseRef.customers();
+        FirebaseRecyclerAdapter<Customer, CustomerViewHolder> recyclerAdapter = new FirebaseRecyclerAdapter<Customer, CustomerViewHolder>(Customer.class, R.layout.item_attendee, CustomerViewHolder.class, attendeesRef) {
             @Override
-            protected void populateViewHolder(final AttendeeViewHolder viewHolder, final Attendee attendee, final int position) {
-                final String attendeeKey = getRef(position).getKey();
-                FirebaseRef.eventAttendees(mEventKey).child(attendeeKey).addValueEventListener(new ValueEventListener() {
+            protected void populateViewHolder(final CustomerViewHolder viewHolder, final Customer customer, final int position) {
+                final String customerKey = getRef(position).getKey();
+                FirebaseRef.eventAttendees(mEventKey).child(customerKey).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         final boolean isAttendee = dataSnapshot.exists();
-                        viewHolder.bind(attendee, isAttendee);
+                        viewHolder.bind(customer, isAttendee);
                         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                DatabaseReference eventAttendeeRef = FirebaseRef.eventAttendee(mEventKey, attendeeKey);
+                                DatabaseReference eventAttendeeRef = FirebaseRef.eventAttendee(mEventKey, customerKey);
                                 if (isAttendee) {
                                     eventAttendeeRef.removeValue();
                                 } else {
@@ -90,7 +90,7 @@ public class AttendeesFragment extends Fragment {
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-                        Log.e(TAG, "Error loading attendees for event : " + mEventKey, databaseError.toException());
+                        Log.e(TAG, "Error loading customers for event : " + mEventKey, databaseError.toException());
                     }
                 });
 
@@ -119,6 +119,5 @@ public class AttendeesFragment extends Fragment {
     }
 
     public interface OnAttendeesFragmentListener {
-        void onAttend(String attendeeKey);
     }
 }
