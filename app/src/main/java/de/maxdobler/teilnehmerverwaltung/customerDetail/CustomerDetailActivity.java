@@ -39,11 +39,17 @@ public class CustomerDetailActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
 
+        setupToolbar(getString(R.string.customer_detail_title));
+
         if (extras != null) {
             loadCustomer(extras);
         }
 
+    }
+
+    private void setupToolbar(String title) {
         if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(title);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
@@ -56,6 +62,7 @@ public class CustomerDetailActivity extends AppCompatActivity {
                 mCustomer = dataSnapshot.getValue(Customer.class);
                 nameEditText.setText(mCustomer.getName());
                 quotaEditText.setText(String.valueOf(mCustomer.getQuota()));
+                setupToolbar(mCustomer.getName());
             }
 
             @Override

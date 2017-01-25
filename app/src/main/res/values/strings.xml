@@ -22,5 +22,6 @@
     <string name="customer_detail_quota_hint">Kontigent</string>
     <string name="customer_detail_quota_error">Kontingent darf nicht negativ sein</string>
     <string name="main_activity_action_add_customer_title">Kunde hinzufügen</string>
+    <string name="customer_detail_title">Kunde hinzufügen</string>
 
 </resources>
