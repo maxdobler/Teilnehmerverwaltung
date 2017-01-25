@@ -5,12 +5,16 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -64,8 +68,32 @@ public class AttendeesFragment extends Fragment {
         DatabaseReference attendeesRef = FirebaseRef.attendees();
         FirebaseRecyclerAdapter<Attendee, AttendeeViewHolder> recyclerAdapter = new FirebaseRecyclerAdapter<Attendee, AttendeeViewHolder>(Attendee.class, R.layout.item_attendee, AttendeeViewHolder.class, attendeesRef) {
             @Override
-            protected void populateViewHolder(AttendeeViewHolder viewHolder, Attendee attendee, int position) {
-                viewHolder.bind(attendee);
+            protected void populateViewHolder(final AttendeeViewHolder viewHolder, final Attendee attendee, final int position) {
+                final String attendeeKey = getRef(position).getKey();
+                FirebaseRef.eventAttendees(mEventKey).child(attendeeKey).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        final boolean isAttendee = dataSnapshot.exists();
+                        viewHolder.bind(attendee, isAttendee);
+                        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                DatabaseReference eventAttendeeRef = FirebaseRef.eventAttendee(mEventKey, attendeeKey);
+                                if (isAttendee) {
+                                    eventAttendeeRef.removeValue();
+                                } else {
+                                    eventAttendeeRef.setValue(true);
+                                }
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.e(TAG, "Error loading attendees for event : " + mEventKey, databaseError.toException());
+                    }
+                });
+
             }
         };
 
