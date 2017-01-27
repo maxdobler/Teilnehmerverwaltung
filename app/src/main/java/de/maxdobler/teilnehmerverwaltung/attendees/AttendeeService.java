@@ -19,6 +19,7 @@ public class AttendeeService {
         if (customer.hasQuota()) {
             eventAttendeeRef.setValue(true);
             customer.removeQuota(1);
+            customer.addAttendedEvent(eventKey);
             saveCustomer(customerKey, customer);
             return true;
         }
@@ -28,6 +29,7 @@ public class AttendeeService {
     public void removeAttendeeFromEvent(String customerKey, String eventKey, Customer customer) {
         FirebaseRef.eventAttendee(eventKey, customerKey).removeValue();
         customer.addQuota(1);
+        customer.removeAttendedEvent(eventKey);
         saveCustomer(customerKey, customer);
     }
 

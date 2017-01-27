@@ -71,7 +71,7 @@ public class AttendeesFragment extends Fragment {
             @Override
             protected void populateViewHolder(final CustomerViewHolder viewHolder, final Customer customer, final int position) {
                 final String customerKey = getRef(position).getKey();
-                FirebaseRef.eventAttendees(mEventKey).child(customerKey).addValueEventListener(new ValueEventListener() {
+                FirebaseRef.customerEventParticipation(customerKey, mEventKey).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         final boolean isAttendee = dataSnapshot.exists();
