@@ -6,35 +6,4 @@
     android:orientation="vertical"
     tools:context="de.maxdobler.teilnehmerverwaltung.customerDetail.CustomerDetailActivity">
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/nameEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/customer_detail_name_hint" />
-
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/quotaEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/customer_detail_quota_hint"
-            android:inputType="number" />
-
-    </android.support.design.widget.TextInputLayout>
-
-    <Button
-        android:id="@+id/saveButton"
-        style="@style/buttonDefault"
-        android:layout_marginTop="24dp"
-        android:text="@string/add_attendee_create_button" />
-
 </LinearLayout>
