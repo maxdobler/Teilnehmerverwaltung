@@ -29,15 +29,15 @@ public class Customer {
         this.quota = quota;
     }
 
-    public void addRemainingEvents(int numberOfDays) {
+    public void addQuota(int numberOfDays) {
         this.quota += numberOfDays;
     }
 
-    public void removeRemainingEvents(int numberOfDays) {
+    public void removeQuota(int numberOfDays) {
         this.quota -= numberOfDays;
     }
 
-    public boolean hasRemainingEvents() {
+    public boolean hasQuota() {
         return this.quota > 0;
     }
 }

@@ -79,17 +79,11 @@ public class AttendeesFragment extends Fragment {
                         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                DatabaseReference eventAttendeeRef = FirebaseRef.eventAttendee(mEventKey, customerKey);
                                 if (isAttendee) {
-                                    eventAttendeeRef.removeValue();
-                                    customer.addRemainingEvents(1);
-                                    saveCustomer();
+                                    AttendeeService.getInstance().removeAttendeeFromEvent(customerKey, mEventKey, customer);
                                 } else {
-                                    if (customer.hasRemainingEvents()) {
-                                        eventAttendeeRef.setValue(true);
-                                        customer.removeRemainingEvents(1);
-                                        saveCustomer();
-                                    } else {
+                                    boolean success = AttendeeService.getInstance().attendEvent(customerKey, customer, mEventKey);
+                                    if (!success) {
                                         showEmptyQuotaDialog();
                                     }
                                 }
@@ -106,9 +100,6 @@ public class AttendeesFragment extends Fragment {
                         });
                     }
 
-                    private void saveCustomer() {
-                        getRef(position).setValue(customer);
-                    }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
