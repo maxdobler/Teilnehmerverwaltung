@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import butterknife.BindView;
@@ -66,8 +66,10 @@ public class AttendeesFragment extends Fragment {
     }
 
     private void setupRecyclerView() {
-        DatabaseReference attendeesRef = FirebaseRef.customers();
-        FirebaseRecyclerAdapter<Customer, CustomerViewHolder> recyclerAdapter = new FirebaseRecyclerAdapter<Customer, CustomerViewHolder>(Customer.class, R.layout.customer_item, CustomerViewHolder.class, attendeesRef) {
+        Query query = FirebaseRef.customers()
+                .orderByChild(Customer.DEACTIVATED)
+                .equalTo(false);
+        FirebaseRecyclerAdapter<Customer, CustomerViewHolder> recyclerAdapter = new FirebaseRecyclerAdapter<Customer, CustomerViewHolder>(Customer.class, R.layout.customer_item, CustomerViewHolder.class, query) {
             @Override
             protected void populateViewHolder(final CustomerViewHolder viewHolder, final Customer customer, final int position) {
                 final String customerKey = getRef(position).getKey();

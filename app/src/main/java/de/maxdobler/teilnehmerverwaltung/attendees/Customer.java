@@ -7,9 +7,11 @@ import java.util.Map;
 public class Customer implements Serializable {
 
     public static final String ATTENDED_EVENTS = "attendedEvents";
+    public static final String DEACTIVATED = "deactivted";
     private String name;
     private int quota = 0;
     private Map<String, Boolean> attendedEvents = new HashMap<>();
+    private boolean deactivted = false;
 
     public Customer() {
     }
@@ -61,5 +63,17 @@ public class Customer implements Serializable {
 
     public void removeAttendedEvent(String eventKey) {
         this.attendedEvents.remove(eventKey);
+    }
+
+    public void setDeactivted(boolean deactivted) {
+        this.deactivted = deactivted;
+    }
+
+    public boolean isDeactivted() {
+        return deactivted;
+    }
+
+    public void deactivate() {
+        this.deactivted = true;
     }
 }

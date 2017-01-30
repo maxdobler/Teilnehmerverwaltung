@@ -2,6 +2,7 @@ package de.maxdobler.teilnehmerverwaltung.customerDetail;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.firebase.database.DataSnapshot;
@@ -63,9 +64,13 @@ public class CustomerDetailActivity extends AppCompatActivity implements Custome
     @Override
     protected void onDestroy() {
         if (mCustomerKey != null) {
-            FirebaseRef.customer(mCustomerKey).removeEventListener(mCustomerFirebaseListener);
+            removeListener();
         }
         super.onDestroy();
+    }
+
+    private void removeListener() {
+        FirebaseRef.customer(mCustomerKey).removeEventListener(mCustomerFirebaseListener);
     }
 
     private void setupToolbar(String title) {
@@ -76,8 +81,25 @@ public class CustomerDetailActivity extends AppCompatActivity implements Custome
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (mCustomerKey != null) {
+            getMenuInflater().inflate(R.menu.customer_detail_actions, menu);
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            finish();
+            return true;
+        }
+
+        if (itemId == R.id.action_delete_customer) {
+            removeListener();
+            mCustomer.deactivate();
+            FirebaseRef.customer(mCustomerKey).setValue(mCustomer);
             finish();
             return true;
         }
