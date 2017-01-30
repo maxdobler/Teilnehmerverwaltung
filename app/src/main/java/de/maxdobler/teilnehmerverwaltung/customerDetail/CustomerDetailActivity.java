@@ -36,9 +36,7 @@ public class CustomerDetailActivity extends AppCompatActivity implements Custome
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     mCustomer = dataSnapshot.getValue(Customer.class);
                     setupToolbar(mCustomer.getName());
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.customer_detail_activity, CustomerInfoFragment.newInstance(mCustomer))
-                            .commit();
+                    replaceWithCustomerInfo();
 
 
                 }
@@ -54,6 +52,12 @@ public class CustomerDetailActivity extends AppCompatActivity implements Custome
 
     }
 
+    private void replaceWithCustomerInfo() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.customer_detail_activity, CustomerInfoFragment.newInstance(mCustomer))
+                .commit();
+    }
+
     private void setNewCustomerFragment() {
         setupToolbar(getString(R.string.add_customer_title));
         getSupportFragmentManager().beginTransaction()
@@ -63,7 +67,7 @@ public class CustomerDetailActivity extends AppCompatActivity implements Custome
 
     @Override
     protected void onDestroy() {
-        if (mCustomerKey != null) {
+        if (mCustomerFirebaseListener != null) {
             removeListener();
         }
         super.onDestroy();
@@ -96,6 +100,12 @@ public class CustomerDetailActivity extends AppCompatActivity implements Custome
             return true;
         }
 
+        if (itemId == R.id.action_edit_customer) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.customer_detail_activity, CustomerEditFragment.newInstance(mCustomer))
+                    .commit();
+            return true;
+        }
         if (itemId == R.id.action_delete_customer) {
             removeListener();
             mCustomer.deactivate();
@@ -112,8 +122,14 @@ public class CustomerDetailActivity extends AppCompatActivity implements Custome
     }
 
     @Override
-    public void customerSaved() {
-        finish();
+    public void saveCustomer(Customer customer) {
+        if (mCustomerKey == null) {
+            FirebaseRef.customers().push().setValue(customer);
+            finish();
+        } else {
+            FirebaseRef.customer(mCustomerKey).setValue(customer);
+            replaceWithCustomerInfo();
+        }
     }
 
     @Override

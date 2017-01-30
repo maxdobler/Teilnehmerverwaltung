@@ -4,27 +4,20 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.maxdobler.teilnehmerverwaltung.R;
 import de.maxdobler.teilnehmerverwaltung.attendees.Customer;
-import de.maxdobler.teilnehmerverwaltung.util.FirebaseRef;
-
-import static de.maxdobler.teilnehmerverwaltung.customerDetail.CustomerDetailActivity.CUSTOMER_KEY;
 
 public class CustomerEditFragment extends Fragment {
     private static final String TAG = CustomerEditFragment.class.getSimpleName();
+    private static final String CUSTOMER = "customer";
     private OnCustomerEditFragmentListener mListener;
 
     @BindView(R.id.nameEditText)
@@ -34,16 +27,15 @@ public class CustomerEditFragment extends Fragment {
     EditText quotaEditText;
 
     private Customer mCustomer;
-    private String mCustomerKey;
 
     public CustomerEditFragment() {
     }
 
-    public static CustomerEditFragment newInstance(String customerKey) {
+    public static CustomerEditFragment newInstance(Customer customer) {
         CustomerEditFragment fragment = new CustomerEditFragment();
-        if (customerKey != null) {
+        if (customer != null) {
             Bundle args = new Bundle();
-            args.putString(CUSTOMER_KEY, customerKey);
+            args.putSerializable(CUSTOMER, customer);
             fragment.setArguments(args);
         }
         return fragment;
@@ -53,25 +45,8 @@ public class CustomerEditFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mCustomerKey = getArguments().getString(CUSTOMER_KEY);
+            mCustomer = (Customer) getArguments().getSerializable(CUSTOMER);
         }
-    }
-
-    private void loadCustomer() {
-        FirebaseRef.customer(mCustomerKey).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                mCustomer = dataSnapshot.getValue(Customer.class);
-                nameEditText.setText(mCustomer.getName());
-                quotaEditText.setText(String.valueOf(mCustomer.getQuota()));
-                mListener.setToolbarTitle(mCustomer.getName());
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.e(TAG, "Failed to load customer " + mCustomerKey, databaseError.toException());
-            }
-        });
     }
 
 
@@ -86,8 +61,10 @@ public class CustomerEditFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         quotaEditText.setText("0");
-        if (mCustomerKey != null) {
-            loadCustomer();
+        if (mCustomer != null) {
+            nameEditText.setText(mCustomer.getName());
+            quotaEditText.setText(String.valueOf(mCustomer.getQuota()));
+            mListener.setToolbarTitle(mCustomer.getName());
         }
     }
 
@@ -111,7 +88,7 @@ public class CustomerEditFragment extends Fragment {
     public interface OnCustomerEditFragmentListener {
         void setToolbarTitle(String title);
 
-        void customerSaved();
+        void saveCustomer(Customer mCustomer);
     }
 
     @OnClick(R.id.saveButton)
@@ -133,13 +110,12 @@ public class CustomerEditFragment extends Fragment {
         }
 
         if (mCustomer == null) {
-            FirebaseRef.customers().push().setValue(new Customer(name, quota));
+            mCustomer = new Customer(name, quota);
         } else {
             mCustomer.setName(name);
             mCustomer.setQuota(quota);
-            FirebaseRef.customer(mCustomerKey).setValue(mCustomer);
         }
 
-        mListener.customerSaved();
+        mListener.saveCustomer(mCustomer);
     }
 }
