@@ -10,8 +10,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import butterknife.ButterKnife;
-import de.maxdobler.teilnehmerverwaltung.customerDetail.CustomerDetailActivity;
 import de.maxdobler.teilnehmerverwaltung.attendees.AttendeesFragment;
+import de.maxdobler.teilnehmerverwaltung.customerDetail.CustomerDetailActivity;
 import de.maxdobler.teilnehmerverwaltung.events.EventsFragment;
 
 public class MainActivity extends AppCompatActivity implements AttendeesFragment.OnAttendeesFragmentListener, EventsFragment.OnEventFragmentListener {
@@ -29,8 +29,6 @@ public class MainActivity extends AppCompatActivity implements AttendeesFragment
                     .commit();
 
         }
-
-
     }
 
     @Override

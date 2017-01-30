@@ -36,4 +36,8 @@ public class EventViewHolder extends RecyclerView.ViewHolder {
             itemView.setBackgroundColor(colorValue.data);
         }
     }
+
+    public void bind(String eventName) {
+        this.nameTextView.setText(eventName);
+    }
 }

@@ -34,4 +34,12 @@
         <item name="android:background">@color/buttonBackgroundColor</item>
     </style>
 
+    <style name="TextHeadline">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingBottom">@dimen/padding_small</item>
+        <item name="android:paddingTop">@dimen/padding_normal</item>
+        <item name="android:textAppearance">@style/Base.TextAppearance.AppCompat.Large</item>
+    </style>
+
 </resources>

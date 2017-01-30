@@ -67,7 +67,7 @@ public class EventsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
-        FirebaseRecyclerAdapter<Event, EventViewHolder> recyclerAdapter = new FirebaseRecyclerAdapter<Event, EventViewHolder>(Event.class, R.layout.item_event, EventViewHolder.class, FirebaseRef.events()) {
+        FirebaseRecyclerAdapter<Event, EventViewHolder> recyclerAdapter = new FirebaseRecyclerAdapter<Event, EventViewHolder>(Event.class, R.layout.event_item, EventViewHolder.class, FirebaseRef.events()) {
             @Override
             protected void populateViewHolder(final EventViewHolder viewHolder, final Event event, final int position) {
                 final String eventKey = getRef(position).getKey();

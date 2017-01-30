@@ -6,6 +6,7 @@ import com.google.firebase.database.IgnoreExtraProperties;
 @IgnoreExtraProperties
 public class Event {
     public static final String ATTENDEES = "attendees";
+    public static final String NAME = "name";
     private String name;
     private long attendeesCount;
 

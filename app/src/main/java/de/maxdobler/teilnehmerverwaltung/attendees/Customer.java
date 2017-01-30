@@ -1,9 +1,10 @@
 package de.maxdobler.teilnehmerverwaltung.attendees;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Customer {
+public class Customer implements Serializable {
 
     public static final String ATTENDED_EVENTS = "attendedEvents";
     private String name;
@@ -34,8 +35,8 @@ public class Customer {
         this.quota = quota;
     }
 
-    public void addQuota(int numberOfDays) {
-        this.quota += numberOfDays;
+    public void addQuota(int amount) {
+        this.quota += amount;
     }
 
     public void removeQuota(int numberOfDays) {

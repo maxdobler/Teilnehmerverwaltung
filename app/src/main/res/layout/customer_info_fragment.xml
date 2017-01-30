@@ -1,0 +1,51 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    tools:context="de.maxdobler.teilnehmerverwaltung.customerDetail.CustomerInfoFragment">
+
+    <TextView
+        android:id="@+id/quotaHeadline"
+        style="@style/TextHeadline"
+        android:text="@string/customer_info_quota_headline" />
+
+    <TextView
+        android:id="@+id/quota"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/quotaHeadline"
+        android:paddingLeft="@dimen/padding_normal"
+        android:paddingRight="@dimen/padding_normal" />
+
+    <TextView
+        android:id="@+id/add10Quota"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/quotaHeadline"
+        android:layout_marginStart="@dimen/padding_normal"
+        android:layout_toEndOf="@+id/quota"
+        android:text="@string/customer_info_add_10_to_quota"
+        android:textColor="@color/colorAccent" />
+
+    <TextView
+        android:id="@+id/participationsHeadline"
+        style="@style/TextHeadline"
+        android:layout_below="@+id/quota" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/participationsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/participationsHeadline" />
+
+    <TextView
+        android:id="@+id/noParticipationPlaceholder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/participationsHeadline" />
+
+</RelativeLayout>

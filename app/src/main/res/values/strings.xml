@@ -14,6 +14,7 @@
     <string name="save">Speichern</string>
     <string name="cancel">Abbrechen</string>
     <string name="ok">OK</string>
+    <string name="add">OK</string>
     <string name="event_attendees_count">(%d)</string>
     <string name="customer_quota_text">Kontingent: %d</string>
     <string name="attendee_empty_quota_dialog_title">"Kontigent aufgebraucht "</string>
@@ -22,12 +23,20 @@
     <string name="customer_detail_quota_hint">Kontigent</string>
     <string name="customer_detail_quota_error">Kontingent darf nicht negativ sein</string>
     <string name="main_activity_action_add_customer_title">Kunde hinzufügen</string>
-    <string name="customer_detail_title">Kunde hinzufügen</string>
+    <string name="add_customer_title">Kunde hinzufügen</string>
     <string name="login_password_hint">Password</string>
     <string name="login_email_hint">Email</string>
     <string name="login_button">Login</string>
     <string name="login_email_error_message">Bitte Email-Adresse eingeben.</string>
     <string name="login_password_error_message">Bitte Password eingeben.</string>
     <string name="auth_failed">Login fehlgeschlagen. Überprüfen sie Ihre Eingabe.</string>
+    <string name="customer_info_participations_headline">Teilgenommene Veranstaltungen (%d)</string>
+    <string name="customer_info_add_10_to_quota">10er Karte hinzufügen…</string>
+    <string name="customer_info_quota_headline">Kontingent</string>
+    <string name="customer_info_no_participations_placeholder_message">%s hat noch an keinen Veranstaltungen teilgenommen.</string>
+    <string name="pin_dialog_error_message">Falscher PIN.</string>
+    <string name="quota_add_10_dialog_title">10er Karte hinzufügen</string>
+    <string name="quota_add_10_dialog_positiv">@string/add</string>
+    <string name="pin_dialog_hint">Bitte PIN eingeben</string>
 
 </resources>
