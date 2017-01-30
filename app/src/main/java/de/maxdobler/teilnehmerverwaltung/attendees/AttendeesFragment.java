@@ -66,9 +66,7 @@ public class AttendeesFragment extends Fragment {
     }
 
     private void setupRecyclerView() {
-        Query query = FirebaseRef.customers()
-                .orderByChild(Customer.DEACTIVATED)
-                .equalTo(false);
+        Query query = FirebaseRef.customers().orderByChild(Customer.DEACTIVATED);
         FirebaseRecyclerAdapter<Customer, CustomerViewHolder> recyclerAdapter = new FirebaseRecyclerAdapter<Customer, CustomerViewHolder>(Customer.class, R.layout.customer_item, CustomerViewHolder.class, query) {
             @Override
             protected void populateViewHolder(final CustomerViewHolder viewHolder, final Customer customer, final int position) {
@@ -78,19 +76,21 @@ public class AttendeesFragment extends Fragment {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         final boolean isAttendee = dataSnapshot.exists();
                         viewHolder.bind(customer, isAttendee);
-                        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                if (isAttendee) {
-                                    AttendeeService.getInstance().removeAttendeeFromEvent(customerKey, mEventKey, customer);
-                                } else {
-                                    boolean success = AttendeeService.getInstance().attendEvent(customerKey, customer, mEventKey);
-                                    if (!success) {
-                                        showEmptyQuotaDialog();
+                        if (customer.isActive()) {
+                            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    if (isAttendee) {
+                                        AttendeeService.getInstance().removeAttendeeFromEvent(customerKey, mEventKey, customer);
+                                    } else {
+                                        boolean success = AttendeeService.getInstance().attendEvent(customerKey, customer, mEventKey);
+                                        if (!success) {
+                                            showEmptyQuotaDialog();
+                                        }
                                     }
                                 }
-                            }
-                        });
+                            });
+                        }
                         viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                             @Override
                             public boolean onLongClick(View view) {

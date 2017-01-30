@@ -5,7 +5,7 @@
         android:id="@+id/action_edit_customer"
         android:title="@string/customer_detail_action_edit_customer" />
     <item
-        android:id="@+id/action_delete_customer"
-        android:title="@string/customer_detail_action_delete_customer" />
+        android:id="@+id/action_deaktivate_customer"
+        android:title="@string/customer_detail_action_deaktivate_customer" />
 
 </menu>

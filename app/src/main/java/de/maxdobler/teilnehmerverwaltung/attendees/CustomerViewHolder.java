@@ -1,5 +1,6 @@
 package de.maxdobler.teilnehmerverwaltung.attendees;
 
+import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -31,14 +32,28 @@ public class CustomerViewHolder extends RecyclerView.ViewHolder {
         String quotaText = itemView.getContext().getString(R.string.customer_quota_text, customer.getQuota());
         quotaTextView.setText(quotaText);
 
-        setBackgroundColor(isAttendee);
+        setBackgroundColor(customer, isAttendee);
     }
 
-    private void setBackgroundColor(boolean isAttendee) {
-        int color = ContextCompat.getColor(itemView.getContext(), android.R.color.background_light);
-        if (isAttendee) {
-            color = ContextCompat.getColor(itemView.getContext(), R.color.colorPrimaryLight);
+    private void setBackgroundColor(Customer customer, boolean isAttendee) {
+        Context context = itemView.getContext();
+        if (customer.isDeactivted()) {
+            if (isAttendee) {
+                setBackground(ContextCompat.getColor(context, R.color.primaryDisabledBackground));
+                return;
+            }
+            setBackground(ContextCompat.getColor(context, R.color.disabledBackground));
+            return;
         }
+        if (isAttendee) {
+            setBackground(ContextCompat.getColor(context, R.color.colorPrimaryLight));
+            return;
+        }
+
+        setBackground(ContextCompat.getColor(context, android.R.color.background_light));
+    }
+
+    private void setBackground(int color) {
         userCard.setCardBackgroundColor(color);
     }
 }

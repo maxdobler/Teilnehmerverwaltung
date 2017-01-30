@@ -1,6 +1,8 @@
 package de.maxdobler.teilnehmerverwaltung.customerDetail;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -37,8 +39,7 @@ public class CustomerDetailActivity extends AppCompatActivity implements Custome
                     mCustomer = dataSnapshot.getValue(Customer.class);
                     setupToolbar(mCustomer.getName());
                     replaceWithCustomerInfo();
-
-
+                    supportInvalidateOptionsMenu();
                 }
 
                 @Override
@@ -86,8 +87,12 @@ public class CustomerDetailActivity extends AppCompatActivity implements Custome
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (mCustomerKey != null) {
-            getMenuInflater().inflate(R.menu.customer_detail_actions, menu);
+        if (mCustomerKey != null && mCustomer != null) {
+            if (mCustomer.isActive()) {
+                getMenuInflater().inflate(R.menu.customer_detail_actions, menu);
+            } else {
+                getMenuInflater().inflate(R.menu.customer_detail_actions_deactivted, menu);
+            }
         }
         return super.onCreateOptionsMenu(menu);
     }
@@ -106,11 +111,40 @@ public class CustomerDetailActivity extends AppCompatActivity implements Custome
                     .commit();
             return true;
         }
-        if (itemId == R.id.action_delete_customer) {
-            removeListener();
-            mCustomer.deactivate();
-            FirebaseRef.customer(mCustomerKey).setValue(mCustomer);
-            finish();
+        if (itemId == R.id.action_deaktivate_customer) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Kunde deaktivieren")
+                    .setMessage("Soll der Kunde wirklich deaktiviert werden? Es können danach keine Veranstaltungeteilnahmen mehr eingetragen werden.")
+                    .setNegativeButton("Nein", null)
+                    .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            removeListener();
+                            mCustomer.deactivate();
+                            FirebaseRef.customer(mCustomerKey).setValue(mCustomer);
+                            finish();
+                        }
+                    })
+                    .create()
+                    .show();
+            return true;
+        }
+        if (itemId == R.id.action_aktivate_customer) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Kunde aktivieren")
+                    .setMessage("Soll der Kunde wieder aktiviert werden?")
+                    .setNegativeButton("Nein", null)
+                    .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            removeListener();
+                            mCustomer.activate();
+                            FirebaseRef.customer(mCustomerKey).setValue(mCustomer);
+                            finish();
+                        }
+                    })
+                    .create()
+                    .show();
             return true;
         }
         return super.onOptionsItemSelected(item);

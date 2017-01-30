@@ -1,5 +1,7 @@
 package de.maxdobler.teilnehmerverwaltung.attendees;
 
+import com.google.firebase.database.Exclude;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -75,5 +77,14 @@ public class Customer implements Serializable {
 
     public void deactivate() {
         this.deactivted = true;
+    }
+
+    @Exclude
+    public boolean isActive() {
+        return !this.deactivted;
+    }
+
+    public void activate() {
+        this.deactivted = false;
     }
 }

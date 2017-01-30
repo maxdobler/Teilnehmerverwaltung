@@ -38,7 +38,8 @@
     <string name="quota_add_10_dialog_title">10er Karte hinzufügen</string>
     <string name="quota_add_10_dialog_positiv">@string/add</string>
     <string name="pin_dialog_hint">Bitte PIN eingeben</string>
-    <string name="customer_detail_action_delete_customer">Kunde löschen</string>
+    <string name="customer_detail_action_deaktivate_customer">Kunde deaktivieren</string>
     <string name="customer_detail_action_edit_customer">Kunde bearbeiten</string>
+    <string name="customer_detail_action_aktivate_customer">Kunde aktivieren</string>
 
 </resources>
