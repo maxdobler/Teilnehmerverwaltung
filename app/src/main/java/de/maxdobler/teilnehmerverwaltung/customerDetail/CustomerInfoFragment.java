@@ -1,18 +1,15 @@
 package de.maxdobler.teilnehmerverwaltung.customerDetail;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -30,8 +27,9 @@ import de.maxdobler.teilnehmerverwaltung.R;
 import de.maxdobler.teilnehmerverwaltung.attendees.Customer;
 import de.maxdobler.teilnehmerverwaltung.events.Event;
 import de.maxdobler.teilnehmerverwaltung.events.EventViewHolder;
+import de.maxdobler.teilnehmerverwaltung.util.AsyncCallback;
+import de.maxdobler.teilnehmerverwaltung.util.DialogUtil;
 import de.maxdobler.teilnehmerverwaltung.util.FirebaseRef;
-import de.maxdobler.teilnehmerverwaltung.util.RemoteConfigService;
 
 import static java.lang.String.valueOf;
 
@@ -124,55 +122,14 @@ public class CustomerInfoFragment extends Fragment {
     @OnClick(R.id.add10Quota)
     void add10Quota() {
 
-        RemoteConfigService.getInstance().getBuyPin(getActivity(), new RemoteConfigService.AsyncCallback<String>() {
+        DialogUtil.getInstance().askForPin(getActivity(), new AsyncCallback<Void>() {
             @Override
-            public void success(final String expectedPin) {
-                showPinDialog(expectedPin);
+            public void success(Void value) {
+                mListener.addQuota(10);
             }
         });
 
 
-    }
-
-    private void showPinDialog(final String expectedPin) {
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        final View pinInputView = inflater.inflate(R.layout.dialog_pin_input_view, null);
-
-        final AlertDialog dialog = new AlertDialog.Builder(getActivity())
-                .setTitle(R.string.quota_add_10_dialog_title)
-                .setView(pinInputView)
-                .setNegativeButton(R.string.cancel, null)
-                .setPositiveButton(R.string.quota_add_10_dialog_positiv, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                })
-                .create();
-
-        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(final DialogInterface dialog) {
-                ((AlertDialog) dialog).getButton(DialogInterface.BUTTON_POSITIVE)
-                        .setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                EditText pinInput = (EditText) pinInputView.findViewById(R.id.pinInput);
-                                String pin = pinInput.getText().toString();
-
-                                if (pin.equals(expectedPin)) {
-                                    mListener.addQuota(10);
-                                    dialog.dismiss();
-                                } else {
-                                    pinInput.setError(getString(R.string.pin_dialog_error_message));
-                                    pinInput.setText("");
-                                }
-                            }
-                        });
-            }
-        });
-
-        dialog.show();
     }
 
     public interface OnCustomerInfoFragmentListener {

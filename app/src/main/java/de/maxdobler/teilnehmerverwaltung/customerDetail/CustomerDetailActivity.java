@@ -14,6 +14,8 @@ import com.google.firebase.database.ValueEventListener;
 import butterknife.ButterKnife;
 import de.maxdobler.teilnehmerverwaltung.R;
 import de.maxdobler.teilnehmerverwaltung.attendees.Customer;
+import de.maxdobler.teilnehmerverwaltung.util.AsyncCallback;
+import de.maxdobler.teilnehmerverwaltung.util.DialogUtil;
 import de.maxdobler.teilnehmerverwaltung.util.FirebaseRef;
 
 public class CustomerDetailActivity extends AppCompatActivity implements CustomerEditFragment.OnCustomerEditFragmentListener, CustomerInfoFragment.OnCustomerInfoFragmentListener {
@@ -106,9 +108,14 @@ public class CustomerDetailActivity extends AppCompatActivity implements Custome
         }
 
         if (itemId == R.id.action_edit_customer) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.customer_detail_activity, CustomerEditFragment.newInstance(mCustomer))
-                    .commit();
+            DialogUtil.getInstance().askForPin(this, new AsyncCallback<Void>() {
+                @Override
+                public void success(Void value) {
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.customer_detail_activity, CustomerEditFragment.newInstance(mCustomer))
+                            .commit();
+                }
+            });
             return true;
         }
         if (itemId == R.id.action_deaktivate_customer) {

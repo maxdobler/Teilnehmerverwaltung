@@ -35,8 +35,7 @@
     <string name="customer_info_quota_headline">Kontingent</string>
     <string name="customer_info_no_participations_placeholder_message">%s hat noch an keinen Veranstaltungen teilgenommen.</string>
     <string name="pin_dialog_error_message">Falscher PIN.</string>
-    <string name="quota_add_10_dialog_title">10er Karte hinzufügen</string>
-    <string name="quota_add_10_dialog_positiv">@string/add</string>
+    <string name="pin_dialog_title">PIN eingeben</string>
     <string name="pin_dialog_hint">Bitte PIN eingeben</string>
     <string name="customer_detail_action_deaktivate_customer">Kunde deaktivieren</string>
     <string name="customer_detail_action_edit_customer">Kunde bearbeiten</string>
