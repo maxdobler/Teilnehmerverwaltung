@@ -14,16 +14,12 @@ public class AttendeeService {
     private AttendeeService() {
     }
 
-    public boolean attendEvent(String customerKey, Customer customer, String eventKey) {
+    public void attendEvent(String customerKey, Customer customer, String eventKey) {
         DatabaseReference eventAttendeeRef = FirebaseRef.eventAttendee(eventKey, customerKey);
-        if (customer.hasQuota()) {
-            eventAttendeeRef.setValue(true);
-            customer.removeQuota(1);
-            customer.addAttendedEvent(eventKey);
-            saveCustomer(customerKey, customer);
-            return true;
-        }
-        return false;
+        eventAttendeeRef.setValue(true);
+        customer.removeQuota(1);
+        customer.addAttendedEvent(eventKey);
+        saveCustomer(customerKey, customer);
     }
 
     public void removeAttendeeFromEvent(String customerKey, String eventKey, Customer customer) {

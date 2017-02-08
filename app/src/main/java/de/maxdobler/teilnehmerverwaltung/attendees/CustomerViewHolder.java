@@ -1,6 +1,7 @@
 package de.maxdobler.teilnehmerverwaltung.attendees;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -29,10 +30,20 @@ public class CustomerViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(Customer customer, boolean isAttendee) {
         nameTextView.setText(customer.getName());
-        String quotaText = itemView.getContext().getString(R.string.customer_quota_text, customer.getQuota());
+        int quota = customer.getQuota();
+        String quotaText = itemView.getContext().getString(R.string.customer_quota_text, quota);
         quotaTextView.setText(quotaText);
+        setTextColor(quota);
 
         setBackgroundColor(customer, isAttendee);
+    }
+
+    private void setTextColor(int quota) {
+        if (quota < 0) {
+            quotaTextView.setTextColor(Color.RED);
+        } else {
+            quotaTextView.setTextColor(Color.BLACK);
+        }
     }
 
     private void setBackgroundColor(Customer customer, boolean isAttendee) {

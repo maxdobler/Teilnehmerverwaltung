@@ -83,10 +83,7 @@ public class AttendeesFragment extends Fragment {
                                     if (isAttendee) {
                                         AttendeeService.getInstance().removeAttendeeFromEvent(customerKey, mEventKey, customer);
                                     } else {
-                                        boolean success = AttendeeService.getInstance().attendEvent(customerKey, customer, mEventKey);
-                                        if (!success) {
-                                            showEmptyQuotaDialog();
-                                        }
+                                        AttendeeService.getInstance().attendEvent(customerKey, customer, mEventKey);
                                     }
                                 }
                             });
